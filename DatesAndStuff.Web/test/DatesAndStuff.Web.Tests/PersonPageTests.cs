@@ -180,6 +180,40 @@ public class PersonPageTests
         fieldError.Displayed.Should().BeTrue();
     }
 
+    [Test]
+    public void BlazeDemo_MexicoCityToDublin_ShouldHaveAtLeastThreeFlights()
+    {
+        // Arrange
+        driver.Navigate().GoToUrl("https://blazedemo.com");
+
+        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+
+        var departureSelectElement = wait.Until(ExpectedConditions.ElementToBeClickable(
+            By.Name("fromPort")));
+
+        var destinationSelectElement = wait.Until(ExpectedConditions.ElementToBeClickable(
+            By.Name("toPort")));
+
+        var departureSelect = new SelectElement(departureSelectElement);
+        var destinationSelect = new SelectElement(destinationSelectElement);
+
+        departureSelect.SelectByText("Mexico City");
+        destinationSelect.SelectByText("Dublin");
+
+        // Act
+        wait.Until(ExpectedConditions.ElementToBeClickable(
+            By.XPath("//input[@value='Find Flights']"))).Click();
+
+        // Assert
+        var flightRows = wait.Until(driver =>
+        {
+            var rows = driver.FindElements(By.XPath("//table/tbody/tr"));
+            return rows.Count > 0 ? rows : null;
+        });
+
+        flightRows.Count.Should().BeGreaterThanOrEqualTo(3);
+    }
+
 
     private bool IsElementPresent(By by)
     {
