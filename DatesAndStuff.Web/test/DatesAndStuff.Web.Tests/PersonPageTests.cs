@@ -162,6 +162,23 @@ public class PersonPageTests
         fieldValidationMessage.Displayed.Should().BeTrue();
     }
 
+    [Test]
+    public void Person_SalaryIncrease_MinusTen_ShouldShowError()
+    {
+        driver.Navigate().GoToUrl(BaseURL);
+        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+
+        wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@data-test='PersonPageNavigation']"))).Click();
+
+        var input = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@data-test='SalaryIncreasePercentageInput']")));
+        input.Clear();
+        input.SendKeys("-10");
+
+        driver.FindElement(By.XPath("//*[@data-test='SalaryIncreaseSubmitButton']")).Click();
+
+        var fieldError = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@data-test='SalaryIncreasePercentageValidationMessage']")));
+        fieldError.Displayed.Should().BeTrue();
+    }
 
 
     private bool IsElementPresent(By by)
