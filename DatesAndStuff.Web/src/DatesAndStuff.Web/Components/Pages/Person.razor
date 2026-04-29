@@ -7,7 +7,7 @@
 
 <EditForm Model="@formModel" OnValidSubmit="@HandleOnValidSubmit">
     <DataAnnotationsValidator />
-    <ValidationSummary />
+    <ValidationSummary data-test="ValidationSummary" />
 
     <h1>@person.Name</h1>
 
@@ -20,7 +20,9 @@
         <label class="col-md-2 col-form-label">Salary increase percentage: <span class="text-danger">*</span></label>
         <div class="col-md-10">
             <InputNumber @bind-Value="@formModel.SalaryIncreasePercentage" Placeholder="Enter a percentage value" data-test="SalaryIncreasePercentageInput" />
-            <ValidationMessage For="@(() => formModel.SalaryIncreasePercentage)" />
+            <ValidationMessage 
+                For="@(() => formModel.SalaryIncreasePercentage)" 
+                data-test="SalaryIncreasePercentageValidationMessage" />
         </div>
     </div>
 
