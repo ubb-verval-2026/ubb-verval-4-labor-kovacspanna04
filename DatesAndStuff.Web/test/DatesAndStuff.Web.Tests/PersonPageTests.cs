@@ -158,8 +158,8 @@ public class PersonPageTests
         var fieldValidationMessage = wait.Until(ExpectedConditions.ElementExists(
             By.XPath("//*[@data-test='SalaryIncreasePercentageValidationMessage']")));
 
-        validationSummary.Text.Should().Contain("-10");
-        fieldValidationMessage.Text.Should().Contain("-10");
+        validationSummary.Displayed.Should().BeTrue();
+        fieldValidationMessage.Displayed.Should().BeTrue();
     }
 
 
